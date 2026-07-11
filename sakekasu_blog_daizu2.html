@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記事タイトル - AgriNOVA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AgriNOVA Logo">
+                </a>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="index.html#about">活動について</a></li>
+                    <li><a href="index.html#activities">活動内容</a></li>
+                    <li><a href="index.html#reports">活動報告</a></li>
+                    <li><a href="index.html#recruit">メンバー募集</a></li>
+                    <li><a href="index.html#links">SNS</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">記事のタイトルをここに記入</h1>
+                <div class="article-meta">
+                    <span class="article-date">2025年2月14日</span>
+                    <span class="article-author">投稿者: AgriNOVA</span>
+                </div>
+            </div>
+
+            <div class="article-content">
+                <p>
+                    みなさんこんにちは。
+                    3週間ぶりのダイズ🫘です。
+                </p>
+                <p> 
+                    気が付けば七夕も終わり、場所によってはセミの声まで聞こえるようになってきました。大学生にとってはテスト期間の幕開けなので、何かと気分が沈んでしまいます…
+                </p>
+                <p> 
+                    今週は肥料の分類をテーマに、私たちが使っているデータサイエンスの手法をいくつか紹介したいと思います。
+                </p>
+                <p> 
+                    今回用いるデータは農業経済研究所が公開しているから取得した全859件<a href="https://www.hi-kei-ken.jp/hiryo_search/">肥料特性情報検索</a>の肥料に関するデータベースです。
+
+                    このデータベースには各肥料登録番号や対象作物、各成分の含有量(%)が登録されていますが、このうち今回解析に使うのは、肥料に含まれる窒素、硝酸態窒素、有機態窒素、リン酸、酸化カリウム、酸化マグネシウム、酸化ホウ素、アルカリ分、酸化ケイ素の計10項目です。
+                </p>
+                <img src="images\blog_daizu_dataimage.png" alt="肥料データベースの一部">
+                <p>    
+                    主に統計解析を扱うプログラミング言語であるRを用いて、このデータを主成分分析・MDS・UMAPの3つの方法でそれぞれ要約し、各成分の含有量から肥料の種類を分類できそうかどうかを調べてみたいと思います。
+                </p>
+                <p> 
+                    これらの手法は今回のデータのような多くの項目からなるデータをより低次元な空間に移してくることで要素の数を減らし、なるべく元のデータの情報を残したまま人間にもわかりやすい状態へと変換することを目的としています。
+                </p>
+                <p>
+                    主成分分析(PCA)では元となるデータの分散(散らばり度合い)が最大になるように一つ目の軸を決め、それと直交する軸の中から分散が最大になるような二つ目の軸を決め、、という風にデータの変換を行います
+                    (出典:<a href="https://ja.wikipedia.org/wiki/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90">WikiPedia 主成分分析</a>)。
+                </p>
+                <p>    
+                    多次元尺度構成法(MDS)では、各データ間の”距離”が最もよく保たれるような低次元空間を探します
+                    (出典:<a href="https://www.macromill.com/service/data-analysis/multi-dimensional-scaling/">マクロミル MDS（多次元尺度構成法）</a>)。
+                </p>
+                <p> 
+                    UMAP(均一マニホールド近似と投影)では重み付きk近傍グラフを用いて、データが所属する集団をもとに力学モデルと呼ばれる仕組みによって非線形な低次元化を行います
+                    (出典:<a href="https://qiita.com/odanny/items/06ab88353bcee7bf6aa7">odanny t-SNEより強いUMAPを（工学的に）理解したい</a>)。
+                </p>
+                <p>
+                    ここまで読んで、「何を説明されたのかすら分からない😵‍💫」という人もおられると思いますが、書いている自分もあまり理解できていないので大丈夫()です！
+                </p>
+                <p> 
+                    要約すると、データの特徴やデータ間の構造をわかりやすくする方法を3つ使ってみよう！という感じですね。
+                </p>
+                <p>    
+                    さてさて、実際の実行結果はどのなるのでしょうか?
+                </p>
+                <p>
+                    3つの方法で作成したグラフを横につなげてみました。左から、主成分分析、MDS、UMAPです。
+                </p>
+                <img src="images\blog_daizu_graph_1.png" alt="肥料データを主成分分析/MDS/UMAPで解析したグラフ">
+
+                <p>    
+                    主成分分析とMDSではそれぞれグラフの左と上にデータが固まっていて見ずらいですが、UMAPだと比較的均等にデータが散らばっているようですね。
+                </p>
+                <p> 
+                    これらのグラフで実際にデータの特徴を要約できているかどうかを調べてみましょう。
+                </p>
+                <p>
+                
+                    今回用いた肥料のデータの中には、窒素、リン、カリウムの三大栄養素のうちどれか一つのみを含む単肥のデータが含まれています。グラフの中から単肥データを取り出してみて、どのような配置になっているかを確認してみました。
+                </p>
+                <img src="images\blog_daizu_graph_2.png" alt="肥料データを主成分分析/MDS/UMAPで解析したグラフ">
+                <p>
+                    それぞれ、緑が窒素、青がカリウム、黒と青がリンの単肥で、黒と青はアルカリ分が含まれていないものと含まれているものです。
+                </p>
+                <p> 
+                    窒素の単肥は複数のまとまりにわかれていますが、他のデータはかなりまとまっているようです。
+                </p>
+                <p> 
+                    窒素の単肥についてはデータの項目が複数にわかれているために分離がみられたのかもしれません🧐。他のデータや項目についても今後調べていく予定ですが、今回はここまでとします。
+                </p>
+                <p> 
+                    来週もお楽しみに！
+                </p>
+
+                <!-- タグの追加 -->
+                <div class="article-tags">
+                    <strong>タグ: </strong>
+                    <a href="#" class="tag">農業</a>
+                    <a href="#" class="tag">データサイエンス</a>
+                    <a href="#" class="tag">Python</a>
+                </div>
+
+                <!-- 記事本文ここまで -->
+            </div>
+
+            <div class="content-container">
+                <a href="index.html" class="back-link">← ホームに戻る</a>
+            </div>
+        </article>
+    </div>
+
+    <script src="menu.js"></script>
+</body>
+</html>
